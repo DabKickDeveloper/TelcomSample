@@ -9,22 +9,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.dabkick.sdk.DabKick_Agent;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
-import com.facebook.login.LoginBehavior;
-import com.facebook.login.LoginManager;
-import com.facebook.login.LoginResult;
 
-import java.util.Arrays;
+import com.dabkick.sdk.DabKick_Agent;
 
 public class MainActivity extends AppCompatActivity {
 
     Button continueBtn;
     EditText email, phone, id;
-    CallbackManager callbackManager;
+    //CallbackManager callbackManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

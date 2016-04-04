@@ -3,8 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/PartnerTelco.iml" filepath="$PROJECT_DIR$/PartnerTelco.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TelcomSample.iml" filepath="$PROJECT_DIR$/TelcomSample.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/dabkick_sdk/dabkick_sdk.iml" filepath="$PROJECT_DIR$/dabkick_sdk/dabkick_sdk.iml" />
     </modules>
   </component>
 </project>
