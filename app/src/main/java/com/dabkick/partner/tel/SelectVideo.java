@@ -10,30 +10,33 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.dabkick.sdk.Adapter.VideoHorizontalAdapter;
+/*import com.dabkick.sdk.Adapter.VideoHorizontalAdapter;
 import com.dabkick.sdk.DabKickVideoAgent.DabKickGlobalData;
 import com.dabkick.sdk.DabKickVideoAgent.DabKickVideoDetail;
 import com.dabkick.sdk.DabKickVideoAgent.DabKickVideoManagerAgent;
 import com.dabkick.sdk.DabKickVideoAgent.DabKickVideoPlayer.PlayDabKickVideoActivity;
 import com.dabkick.sdk.DabKick_Agent;
-import com.dabkick.sdk.Horizontal.HorizontalListView;
+import com.dabkick.sdk.Horizontal.HorizontalListView;*/
+
+//import com.dabkick.youtubevideo.HorizontalListView;
+//import com.dabkick.youtubevideo.adapter.VideoHorizontalAdapter;
 
 import java.util.ArrayList;
 
 public class SelectVideo extends AppCompatActivity {
 
     //your own listview
-    public com.dabkick.sdk.Horizontal.HorizontalListView hListView;
+//    public HorizontalListView hListView;
     //your own adapter
-    public VideoHorizontalAdapter mVideoHorizontalAdapter;
+//    public VideoHorizontalAdapter mVideoHorizontalAdapter;
     //Dabkick agent init to make use of lib
-    DabKickVideoManagerAgent dabKickVideoManagerAgent = DabKickVideoManagerAgent.getInstance();
+    //DabKickVideoManagerAgent dabKickVideoManagerAgent = DabKickVideoManagerAgent.getInstance();
     //local array list to get the results
     ArrayList VideosList;
     private Button goToLs;
 
     //Dabkickvideodetail
-    DabKickVideoDetail mDabKickVideoDetailSingleItem;
+    //DabKickVideoDetail mDabKickVideoDetailSingleItem;
 
     TextView statusMsg,userInfo;
     Button watchWithFriends;
@@ -45,7 +48,7 @@ public class SelectVideo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_video);
 
-        init();
+        /*init();
 
         statusMsg.setMovementMethod(new ScrollingMovementMethod());
         DabKick_Agent.displayStatusMessages(statusMsg);
@@ -105,7 +108,7 @@ public class SelectVideo extends AppCompatActivity {
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
-        });
+        });*/
     }
 
     void init(){
