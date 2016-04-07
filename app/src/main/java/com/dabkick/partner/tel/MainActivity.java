@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.dabkick.sdk.DabKick_Agent;
 import com.dabkick.sdk.Dabkick;
+import com.dabkick.sdk.Global.GlobalHandler;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -29,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
         init();
 
         Dabkick.init(this);
-        //Dabkick.register("com.dabkick.partner.tel","email.com","fbID","partnerID","phone");
 
         continueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,14 +38,26 @@ public class MainActivity extends AppCompatActivity {
                 if (!email.getText().toString().isEmpty() ||
                         !phone.getText().toString().isEmpty() || !id.getText().toString().isEmpty()){
 
-                    DabKick_Agent.DK_Register("TELCO_ID", null, email.getText().toString(),
-                            phone.getText().toString(), id.getText().toString(), MainActivity.this);
+//                    DabKick_Agent.DK_Register("TELCO_ID", null, email.getText().toString(),
+//                            phone.getText().toString(), id.getText().toString(), MainActivity.this);
                     //Move to next Activity
 
-                    Intent selectVideo = new Intent(MainActivity.this, SelectVideo.class);
-                    selectVideo.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(selectVideo);
-                    finish();
+                    String e = email.getText().toString();
+                    String p = phone.getText().toString();
+                    String partnerID = id.getText().toString();
+
+                    Dabkick.setOnRegisterFinished(new Dabkick.OnRegisterFinishedListener() {
+                        @Override
+                        public void onRegistered(boolean b, String s) {
+                            Intent selectVideo = new Intent(MainActivity.this, SelectVideo.class);
+                            selectVideo.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(selectVideo);
+                            finish();
+                        }
+                    });
+                    Dabkick.register("com.dabkick.partner.tel", e, "", partnerID, p);
+
+
 
 
                 }else{

@@ -11,14 +11,19 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.dabkick.sdk.Adapter.VideoHorizontalAdapter;
-import com.dabkick.sdk.DabKickVideoAgent.DabKickVideoPlayer.PlayDabKickVideoActivity;
 import com.dabkick.sdk.DabKick_Agent;
+import com.dabkick.sdk.Dabkick;
 import com.dabkick.sdk.Global.GlobalData;
+import com.dabkick.sdk.Global.GlobalHandler;
 import com.dabkick.sdk.Global.VideoManager;
 import com.dabkick.sdk.Horizontal.HorizontalListView;
 import com.dabkick.sdk.Livesession.YouTubeVideoDetail;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
+
+import rx.Observable;
+import rx.functions.Action1;
 
 public class SelectVideo extends AppCompatActivity {
 
@@ -48,15 +53,26 @@ public class SelectVideo extends AppCompatActivity {
         init();
 
         statusMsg.setMovementMethod(new ScrollingMovementMethod());
-        DabKick_Agent.displayStatusMessages(statusMsg);
 
-        userInfo.setMovementMethod(new ScrollingMovementMethod());
-        DabKick_Agent.displayUserInfo(userInfo);
+        Observable.interval(1, TimeUnit.SECONDS).subscribe(new Action1<Long>() {
+            @Override
+            public void call(Long aLong) {
+                GlobalHandler.runOnUIThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        statusMsg.setText(statusMsg.getText().toString() + Dabkick.getStatusMsg());
+                    }
+                });
+            }
+        });
+
+
 
         goToLs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DabKick_Agent.goToLiveSession(SelectVideo.this);
+                //DabKick_Agent.goToLiveSession(SelectVideo.this);
+                Dabkick.watchWithFriends(SelectVideo.this);
             }
         });
 
@@ -76,12 +92,12 @@ public class SelectVideo extends AppCompatActivity {
         videoManager.setOnSearchFinishedLoading(new VideoManager.OnSearchFinishedLoadingListener() {
             @Override
             public void onSearchFinishedLoading(boolean b) {
-                GlobalData.runOnUIThread(new Runnable() {
+                GlobalHandler.runOnUIThread(new Runnable() {
                     @Override
                     public void run() {
                         mProgressBar.setVisibility(View.GONE);
                         //call this method with the search term to get the results
-                        VideosList = videoManager.getSearchResultByTerm(videoManager.TERM_TELCO);
+                        VideosList = videoManager.getSearchResultByTerm("telcom");
                         mVideoHorizontalAdapter = new VideoHorizontalAdapter(SelectVideo.this, R.layout.video_view_item, VideosList, false);
                         hListView.setAdapter(mVideoHorizontalAdapter);
                         mVideoHorizontalAdapter.notifyDataSetChanged();
@@ -90,7 +106,7 @@ public class SelectVideo extends AppCompatActivity {
             }
         });
         //Condition check to load the searched videos if not throw alert(logic done in DabKickVideoManagerAgent)
-        videoManager.searchVideo(videoManager.TERM_TELCO);
+        videoManager.searchVideo("telcom");
 
         hListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -98,10 +114,10 @@ public class SelectVideo extends AppCompatActivity {
                 //Call this method to get the selected video
                 mYoutubeVideoDetailSingleItem = (YouTubeVideoDetail)mVideoHorizontalAdapter.getItem(position);
                 //PlayDabKickVideoActivity is an dabkick library class, use this to get a lib built-in player.
-                Intent intent = new Intent(SelectVideo.this, PlayDabKickVideoActivity.class);
-                intent.putExtra(PlayDabKickVideoActivity.EXTRA_VIDEO_ID, mYoutubeVideoDetailSingleItem.videoID);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
+               // Intent intent = new Intent(SelectVideo.this, PlayDabKickVideoActivity.class);
+                //intent.putExtra(PlayDabKickVideoActivity.EXTRA_VIDEO_ID, mYoutubeVideoDetailSingleItem.videoID);
+               // intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                //startActivity(intent);
             }
         });
     }
@@ -109,7 +125,7 @@ public class SelectVideo extends AppCompatActivity {
     void init(){
 
         statusMsg = (TextView)findViewById(R.id.statusMsg);
-        userInfo = (TextView)findViewById(R.id.userInfo) ;
+      //  userInfo = (TextView)findViewById(R.id.userInfo) ;
 //        watchWithFriends = (Button)findViewById(R.id.wwf) ;
         mProgressBar = (ProgressBar)findViewById(R.id.progress_bar);
         goToLs = (Button) findViewById(R.id.go_to_ls_btn);
