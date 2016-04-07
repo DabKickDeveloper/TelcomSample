@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     tools:context="com.dabkick.partner.tel.SelectVideo">
 
-    <com.dabkick.youtubevideo.HorizontalListView
+    <com.dabkick.sdk.Horizontal.HorizontalListView
         android:id="@+id/testvideosListView"
         android:layout_marginTop="25dp"
         android:layout_width="match_parent"

@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         init();
 
         Dabkick.init(this);
-        Dabkick.register("com.dabkick.partner.tel","email.com","fbID","partnerID","phone");
+        //Dabkick.register("com.dabkick.partner.tel","email.com","fbID","partnerID","phone");
 
         continueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,8 +38,8 @@ public class MainActivity extends AppCompatActivity {
                 if (!email.getText().toString().isEmpty() ||
                         !phone.getText().toString().isEmpty() || !id.getText().toString().isEmpty()){
 
-                    /*DabKick_Agent.DK_Register("TELCO_ID", null, email.getText().toString(),
-                            phone.getText().toString(), id.getText().toString(), MainActivity.this);*/
+                    DabKick_Agent.DK_Register("TELCO_ID", null, email.getText().toString(),
+                            phone.getText().toString(), id.getText().toString(), MainActivity.this);
                     //Move to next Activity
 
                     Intent selectVideo = new Intent(MainActivity.this, SelectVideo.class);
