@@ -11,12 +11,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.dabkick.sdk.Adapter.VideoHorizontalAdapter;
-import com.dabkick.sdk.DabKickVideoAgent.DabKickGlobalData;
-import com.dabkick.sdk.DabKickVideoAgent.DabKickVideoDetail;
-import com.dabkick.sdk.DabKickVideoAgent.DabKickVideoManagerAgent;
 import com.dabkick.sdk.DabKickVideoAgent.DabKickVideoPlayer.PlayDabKickVideoActivity;
 import com.dabkick.sdk.DabKick_Agent;
+import com.dabkick.sdk.Global.GlobalData;
+import com.dabkick.sdk.Global.VideoManager;
 import com.dabkick.sdk.Horizontal.HorizontalListView;
+import com.dabkick.sdk.Livesession.YouTubeVideoDetail;
 
 import java.util.ArrayList;
 
@@ -27,13 +27,13 @@ public class SelectVideo extends AppCompatActivity {
     //your own adapter
     public VideoHorizontalAdapter mVideoHorizontalAdapter;
     //Dabkick agent init to make use of lib
-    DabKickVideoManagerAgent dabKickVideoManagerAgent = DabKickVideoManagerAgent.getInstance();
+    VideoManager videoManager = VideoManager.getInstance();
     //local array list to get the results
     ArrayList VideosList;
     private Button goToLs;
 
     //Dabkickvideodetail
-    DabKickVideoDetail mDabKickVideoDetailSingleItem;
+    YouTubeVideoDetail mYoutubeVideoDetailSingleItem;
 
     TextView statusMsg,userInfo;
     Button watchWithFriends;
@@ -73,35 +73,33 @@ public class SelectVideo extends AppCompatActivity {
         hListView = (HorizontalListView) findViewById(R.id.testvideosListView);
 
         //make a call to this agent to get the search results and pass the results to your adapter to show it in list view
-        dabKickVideoManagerAgent.setOnSearchFinishedLoading(new DabKickVideoManagerAgent.OnSearchFinishedLoadingListener() {
+        videoManager.setOnSearchFinishedLoading(new VideoManager.OnSearchFinishedLoadingListener() {
             @Override
-            public ArrayList onSearchFinishedLoading(boolean success) {
-                DabKickGlobalData.runOnUIThread(new Runnable() {
+            public void onSearchFinishedLoading(boolean b) {
+                GlobalData.runOnUIThread(new Runnable() {
                     @Override
                     public void run() {
                         mProgressBar.setVisibility(View.GONE);
                         //call this method with the search term to get the results
-                        VideosList = dabKickVideoManagerAgent.getSearchResultByTerm(dabKickVideoManagerAgent.TERM_TELCO);
+                        VideosList = videoManager.getSearchResultByTerm(videoManager.TERM_TELCO);
                         mVideoHorizontalAdapter = new VideoHorizontalAdapter(SelectVideo.this, R.layout.video_view_item, VideosList, false);
                         hListView.setAdapter(mVideoHorizontalAdapter);
                         mVideoHorizontalAdapter.notifyDataSetChanged();
                     }
                 });
-                return null;
             }
         });
-
         //Condition check to load the searched videos if not throw alert(logic done in DabKickVideoManagerAgent)
-        dabKickVideoManagerAgent.searchVideo(dabKickVideoManagerAgent.TERM_TELCO);
+        videoManager.searchVideo(videoManager.TERM_TELCO);
 
         hListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //Call this method to get the selected video
-                mDabKickVideoDetailSingleItem = (DabKickVideoDetail)mVideoHorizontalAdapter.getItem(position);
+                mYoutubeVideoDetailSingleItem = (YouTubeVideoDetail)mVideoHorizontalAdapter.getItem(position);
                 //PlayDabKickVideoActivity is an dabkick library class, use this to get a lib built-in player.
                 Intent intent = new Intent(SelectVideo.this, PlayDabKickVideoActivity.class);
-                intent.putExtra(PlayDabKickVideoActivity.EXTRA_VIDEO_ID, mDabKickVideoDetailSingleItem.videoID);
+                intent.putExtra(PlayDabKickVideoActivity.EXTRA_VIDEO_ID, mYoutubeVideoDetailSingleItem.videoID);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
