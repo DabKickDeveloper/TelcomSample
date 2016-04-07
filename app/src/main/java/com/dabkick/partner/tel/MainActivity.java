@@ -9,8 +9,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-
 import com.dabkick.sdk.DabKick_Agent;
+import com.dabkick.sdk.Dabkick;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,12 +19,17 @@ public class MainActivity extends AppCompatActivity {
     EditText email, phone, id;
     //CallbackManager callbackManager;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         init();
+
+        Dabkick.init(this);
+        Dabkick.register("com.dabkick.partner.tel","email.com","fbID","partnerID","phone");
 
         continueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
