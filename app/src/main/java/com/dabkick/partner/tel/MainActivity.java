@@ -38,8 +38,8 @@ public class MainActivity extends AppCompatActivity {
                 if (!email.getText().toString().isEmpty() ||
                         !phone.getText().toString().isEmpty() || !id.getText().toString().isEmpty()){
 
-                    DabKick_Agent.DK_Register("TELCO_ID", null, email.getText().toString(),
-                            phone.getText().toString(), id.getText().toString(), MainActivity.this);
+                    /*DabKick_Agent.DK_Register("TELCO_ID", null, email.getText().toString(),
+                            phone.getText().toString(), id.getText().toString(), MainActivity.this);*/
                     //Move to next Activity
 
                     Intent selectVideo = new Intent(MainActivity.this, SelectVideo.class);
