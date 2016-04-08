@@ -113,6 +113,7 @@ public class SelectVideo extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //Call this method to get the selected video
                 mYoutubeVideoDetailSingleItem = (YouTubeVideoDetail)mVideoHorizontalAdapter.getItem(position);
+                Dabkick.playYoutubeVideo(SelectVideo.this,mYoutubeVideoDetailSingleItem.videoID);
                 //PlayDabKickVideoActivity is an dabkick library class, use this to get a lib built-in player.
                // Intent intent = new Intent(SelectVideo.this, PlayDabKickVideoActivity.class);
                 //intent.putExtra(PlayDabKickVideoActivity.EXTRA_VIDEO_ID, mYoutubeVideoDetailSingleItem.videoID);
