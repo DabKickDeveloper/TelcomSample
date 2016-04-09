@@ -148,7 +148,7 @@
                 <TextView
                     android:width="60dp"
                     android:gravity="left"
-                    android:text="unique :"
+                    android:text="Uniq ID :"
                     android:textStyle="bold" />
 
                 <TextView

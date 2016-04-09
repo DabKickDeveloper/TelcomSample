@@ -81,15 +81,13 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.3.2'
     compile(name: 'dabkick-release', ext: 'aar')
 
-    compile 'com.facebook.android:facebook-android-sdk:4.+'
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.2.1'
-    compile files('youtubeExtractor.jar')
-    compile 'com.squareup.picasso:picasso:2.3.2'
     compile 'com.android.support:design:23.2.1'
     compile 'com.android.support:support-v4:23.2.1'
-    compile files('libs/pushy-1.0.7.jar')
+
+    compile 'com.squareup.picasso:picasso:2.3.2'
     compile 'io.reactivex:rxandroid:1.1.0'
     compile 'io.reactivex:rxjava:1.1.0'
     compile 'com.squareup.retrofit:retrofit:2.0.0-beta2'
@@ -102,5 +100,7 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.2.0'
     compile 'com.squareup.okhttp:logging-interceptor:2.6.0'
     compile 'org.apache.commons:commons-lang3:3.1'
+    compile 'com.facebook.android:facebook-android-sdk:4.+'
+
 
 }

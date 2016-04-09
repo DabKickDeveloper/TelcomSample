@@ -10,21 +10,13 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.dabkick.sdk.Adapter.VideoHorizontalAdapter;
-import com.dabkick.sdk.DabKick_Agent;
-import com.dabkick.sdk.Dabkick;
-import com.dabkick.sdk.Global.GlobalData;
 import com.dabkick.sdk.Global.GlobalHandler;
+import com.dabkick.sdk.Global.HorizontalListView;
 import com.dabkick.sdk.Global.PreferenceHandler;
 import com.dabkick.sdk.Global.VideoManager;
-import com.dabkick.sdk.Horizontal.HorizontalListView;
+import com.dabkick.sdk.Livesession.VideoHorizontalAdapter;
 import com.dabkick.sdk.Livesession.YouTubeVideoDetail;
-
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
-
-import rx.Observable;
-import rx.functions.Action1;
 
 public class SelectVideo extends AppCompatActivity {
 
@@ -88,8 +80,6 @@ public class SelectVideo extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //Call this method to get the selected video
                 mYoutubeVideoDetailSingleItem = (YouTubeVideoDetail)mVideoHorizontalAdapter.getItem(position);
-                //Dabkick.playYoutubeVideo(SelectVideo.this,mYoutubeVideoDetailSingleItem.videoID);
-                //PlayDabKickVideoActivity is an dabkick library class, use this to get a lib built-in player.
                 Intent intent = new Intent(SelectVideo.this, PlayDabKickVideoActivity.class);
                 intent.putExtra(PlayDabKickVideoActivity.EXTRA_VIDEO_ID, mYoutubeVideoDetailSingleItem.videoID);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -101,8 +91,6 @@ public class SelectVideo extends AppCompatActivity {
     void init(){
 
         statusMsg = (TextView)findViewById(R.id.statusMsg);
-      //  userInfo = (TextView)findViewById(R.id.userInfo) ;
-//        watchWithFriends = (Button)findViewById(R.id.wwf) ;
         mProgressBar = (ProgressBar)findViewById(R.id.progress_bar);
 
     }
