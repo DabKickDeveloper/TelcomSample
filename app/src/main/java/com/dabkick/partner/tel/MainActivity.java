@@ -141,10 +141,10 @@ public class MainActivity extends AppCompatActivity {
                                     finish();
                                 }
                             };
-                            DialogHelper.popupAlertDialog(MainActivity.this,null,"The app is now registered with DabKick with the provided user credentials.","ok",ok);
+                            DialogHelper.popupAlertDialog(MainActivity.this, null, "The app is now registered with DabKick with the provided user credentials.", "ok", ok);
                         }
                     });
-                    Dabkick.register(MainActivity.this,"com.dabkick.partner.tel", identifier);
+                    Dabkick.register(MainActivity.this,"com.dabkick.partner.tel.production", identifier);
 
 
                 } else {
