@@ -91,6 +91,7 @@ public class PlayDabKickVideoActivity extends Activity {
         findViews();
         utilities = new Utilities();
 
+        DialogHelper.popupAlertDialog(this, null, "Video is still playing in the partner app's video player. When \'Watch with friends\' button is clicked, the user can watch the video together inside DabKick's interface.", "ok");
         videoseek.getProgressDrawable().setColorFilter(Color.LTGRAY, PorterDuff.Mode.SRC_IN);
 
         Intent intent = getIntent();
@@ -244,7 +245,7 @@ public class PlayDabKickVideoActivity extends Activity {
                 //ashwini ended
 
                 //end
-                Dabkick.watchWithFriends(PlayDabKickVideoActivity.this);
+                Dabkick.watchWithFriends(PlayDabKickVideoActivity.this,mYouTubeVideoDetail.videoID);
             }
         });
 

@@ -32,7 +32,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Status:"
+        android:text="Login information:"
         android:textStyle="bold"
         android:id="@+id/status"
         android:layout_below="@+id/testvideosListView"
@@ -47,16 +47,9 @@
         android:layout_marginTop="15dp"
         android:layout_marginLeft="20dp"
         android:maxLines="30"
+        android:textSize="18dp"
         android:scrollbars = "vertical"/>
 
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:text="GO TO LIVESESSION"
-        android:layout_below="@+id/statusMsg"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="25dp"
-        android:id="@+id/go_to_ls_btn"/>
 
 </RelativeLayout>

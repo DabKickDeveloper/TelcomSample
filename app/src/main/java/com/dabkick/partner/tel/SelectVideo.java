@@ -15,6 +15,7 @@ import com.dabkick.sdk.DabKick_Agent;
 import com.dabkick.sdk.Dabkick;
 import com.dabkick.sdk.Global.GlobalData;
 import com.dabkick.sdk.Global.GlobalHandler;
+import com.dabkick.sdk.Global.PreferenceHandler;
 import com.dabkick.sdk.Global.VideoManager;
 import com.dabkick.sdk.Horizontal.HorizontalListView;
 import com.dabkick.sdk.Livesession.YouTubeVideoDetail;
@@ -35,7 +36,6 @@ public class SelectVideo extends AppCompatActivity {
     VideoManager videoManager = VideoManager.getInstance();
     //local array list to get the results
     ArrayList VideosList;
-    private Button goToLs;
 
     //Dabkickvideodetail
     YouTubeVideoDetail mYoutubeVideoDetailSingleItem;
@@ -54,36 +54,10 @@ public class SelectVideo extends AppCompatActivity {
 
         statusMsg.setMovementMethod(new ScrollingMovementMethod());
 
-        Observable.interval(1, TimeUnit.SECONDS).subscribe(new Action1<Long>() {
-            @Override
-            public void call(Long aLong) {
-                GlobalHandler.runOnUIThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        statusMsg.setText(statusMsg.getText().toString() + Dabkick.getStatusMsg());
-                    }
-                });
-            }
-        });
+        String loginInfo = "Email:"+ PreferenceHandler.getEmail()+ "\nPhone number:"+PreferenceHandler.getPhoneNum()
+                +"\nUnique ID:"+PreferenceHandler.getUniqueID();
+        statusMsg.setText(loginInfo);
 
-
-
-        goToLs.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //DabKick_Agent.goToLiveSession(SelectVideo.this);
-                Dabkick.watchWithFriends(SelectVideo.this);
-            }
-        });
-
-//        watchWithFriends.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                DabKickRegisterAgent.watchWithFriends(SelectVideo.this);
-//
-//            }
-//        });
         mProgressBar.setVisibility(View.VISIBLE);
 
         hListView = (HorizontalListView) findViewById(R.id.testvideosListView);
@@ -101,6 +75,7 @@ public class SelectVideo extends AppCompatActivity {
                         mVideoHorizontalAdapter = new VideoHorizontalAdapter(SelectVideo.this, R.layout.video_view_item, VideosList, false);
                         hListView.setAdapter(mVideoHorizontalAdapter);
                         mVideoHorizontalAdapter.notifyDataSetChanged();
+
                     }
                 });
             }
@@ -113,12 +88,12 @@ public class SelectVideo extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //Call this method to get the selected video
                 mYoutubeVideoDetailSingleItem = (YouTubeVideoDetail)mVideoHorizontalAdapter.getItem(position);
-                Dabkick.playYoutubeVideo(SelectVideo.this,mYoutubeVideoDetailSingleItem.videoID);
+                //Dabkick.playYoutubeVideo(SelectVideo.this,mYoutubeVideoDetailSingleItem.videoID);
                 //PlayDabKickVideoActivity is an dabkick library class, use this to get a lib built-in player.
-               // Intent intent = new Intent(SelectVideo.this, PlayDabKickVideoActivity.class);
-                //intent.putExtra(PlayDabKickVideoActivity.EXTRA_VIDEO_ID, mYoutubeVideoDetailSingleItem.videoID);
-               // intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                //startActivity(intent);
+                Intent intent = new Intent(SelectVideo.this, PlayDabKickVideoActivity.class);
+                intent.putExtra(PlayDabKickVideoActivity.EXTRA_VIDEO_ID, mYoutubeVideoDetailSingleItem.videoID);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
             }
         });
     }
@@ -129,7 +104,6 @@ public class SelectVideo extends AppCompatActivity {
       //  userInfo = (TextView)findViewById(R.id.userInfo) ;
 //        watchWithFriends = (Button)findViewById(R.id.wwf) ;
         mProgressBar = (ProgressBar)findViewById(R.id.progress_bar);
-        goToLs = (Button) findViewById(R.id.go_to_ls_btn);
 
     }
 }
