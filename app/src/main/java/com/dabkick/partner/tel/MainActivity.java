@@ -144,7 +144,8 @@ public class MainActivity extends AppCompatActivity {
                             DialogHelper.popupAlertDialog(MainActivity.this, null, "The app is now registered with DabKick with the provided user credentials.", "ok", ok);
                         }
                     });
-                    Dabkick.register(MainActivity.this,"com.dabkick.partner.tel.production", identifier);
+                    String packageName = MainActivity.this.getPackageName();
+                    Dabkick.register(MainActivity.this,packageName, identifier);
 
 
                 } else {
