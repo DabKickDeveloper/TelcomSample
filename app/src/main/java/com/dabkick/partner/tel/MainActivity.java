@@ -78,24 +78,6 @@ public class MainActivity extends AppCompatActivity {
 
         findViews();
 
-        if (Dabkick.isRegistered(this))
-        {
-            registeredInfo.setVisibility(View.VISIBLE);
-            userDetails.setVisibility(View.GONE);
-            resetBtn.setVisibility(View.VISIBLE);
-
-            UserIdentifier userIdentifier = UserIdentifier.getStoredValue(this);
-            emailText.setText(userIdentifier.email);
-            phoneText.setText(userIdentifier.phoneNumber);
-            uniqueIDText.setText(userIdentifier.uniqueID);
-
-        }
-        else {
-            registeredInfo.setVisibility(View.GONE);
-            userDetails.setVisibility(View.VISIBLE);
-            resetBtn.setVisibility(View.GONE);
-        }
-
         RxView.clicks(resetBtn).throttleFirst(300,TimeUnit.MILLISECONDS).subscribe(new Action1<Void>() {
             @Override
             public void call(Void aVoid) {
@@ -141,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
                     Intent selectVideo = new Intent(MainActivity.this, SelectVideo.class);
                     selectVideo.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(selectVideo);
-                    finish();
+                    //finish();
                     return;
                 }
 
@@ -167,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
                                     Intent selectVideo = new Intent(MainActivity.this, SelectVideo.class);
                                     selectVideo.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                     startActivity(selectVideo);
-                                    finish();
+                                    //finish();
                                 }
                             };
                             DialogHelper.popupAlertDialog(MainActivity.this, null, "The app is now registered with DabKick with the provided user credentials.", "ok", ok);
@@ -195,5 +177,28 @@ public class MainActivity extends AppCompatActivity {
                 editText.setSelection(editText.getText().length());
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (Dabkick.isRegistered(this))
+        {
+            registeredInfo.setVisibility(View.VISIBLE);
+            userDetails.setVisibility(View.GONE);
+            resetBtn.setVisibility(View.VISIBLE);
+
+            UserIdentifier userIdentifier = UserIdentifier.getStoredValue(this);
+            emailText.setText(userIdentifier.email);
+            phoneText.setText(userIdentifier.phoneNumber);
+            uniqueIDText.setText(userIdentifier.uniqueID);
+
+        }
+        else {
+            registeredInfo.setVisibility(View.GONE);
+            userDetails.setVisibility(View.VISIBLE);
+            resetBtn.setVisibility(View.GONE);
+        }
     }
 }
