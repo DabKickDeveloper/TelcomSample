@@ -4,7 +4,10 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -27,13 +30,13 @@ public class MainActivity extends AppCompatActivity {
     private RelativeLayout userDetails;
     private RelativeLayout emailFields;
     private TextView email;
-    private EditText emailId;
+    private CustomEdTxt emailId;
     private RelativeLayout phoneFields;
     private TextView phone;
-    private EditText phNum;
+    private CustomEdTxt phNum;
     private RelativeLayout uniqueFields;
     private TextView id;
-    private EditText unId;
+    private CustomEdTxt unId;
     private LinearLayout registeredInfo;
     private TextView emailText;
     private TextView phoneText;
@@ -52,13 +55,13 @@ public class MainActivity extends AppCompatActivity {
         userDetails = (RelativeLayout)findViewById( R.id.user_details );
         emailFields = (RelativeLayout)findViewById( R.id.email_fields );
         email = (TextView)findViewById( R.id.email );
-        emailId = (EditText)findViewById( R.id.email_id );
+        emailId = (CustomEdTxt) findViewById( R.id.email_id );
         phoneFields = (RelativeLayout)findViewById( R.id.phone_fields );
         phone = (TextView)findViewById( R.id.phone );
-        phNum = (EditText)findViewById( R.id.ph_num );
+        phNum = (CustomEdTxt)findViewById( R.id.ph_num );
         uniqueFields = (RelativeLayout)findViewById( R.id.unique_fields );
         id = (TextView)findViewById( R.id.id );
-        unId = (EditText)findViewById( R.id.un_id );
+        unId = (CustomEdTxt)findViewById( R.id.un_id );
         registeredInfo = (LinearLayout)findViewById( R.id.registeredInfo );
         emailText = (TextView)findViewById( R.id.emailText );
         phoneText = (TextView)findViewById( R.id.phoneText );
@@ -100,6 +103,32 @@ public class MainActivity extends AppCompatActivity {
                 registeredInfo.setVisibility(View.GONE);
                 userDetails.setVisibility(View.VISIBLE);
                 resetBtn.setVisibility(View.GONE);
+            }
+        });
+
+        emailId.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                    requestFocus(phNum);
+                    Log.d("vallabh","inside email id");
+                    return true;
+                }
+                return handled;
+            }
+        });
+
+        phNum.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                    requestFocus(unId);
+                    Log.d("vallabh","inside phno");
+                    return true;
+                }
+                return handled;
             }
         });
 
@@ -156,5 +185,15 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    void requestFocus(final EditText editText) {
+        editText.post(new Runnable() {
+            @Override
+            public void run() {
+                editText.requestFocus();
+                editText.setSelection(editText.getText().length());
+            }
+        });
     }
 }
