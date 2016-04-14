@@ -14,8 +14,10 @@ import com.dabkick.sdk.Global.GlobalHandler;
 import com.dabkick.sdk.Global.HorizontalListView;
 import com.dabkick.sdk.Global.PreferenceHandler;
 import com.dabkick.sdk.Global.VideoManager;
+import com.dabkick.sdk.Livesession.LSManager.YouTubeVideoDetail;
 import com.dabkick.sdk.Livesession.VideoHorizontalAdapter;
-import com.dabkick.sdk.Livesession.YouTubeVideoDetail;
+import com.dabkick.sdk.Video.PlayDabKickVideoActivity;
+
 import java.util.ArrayList;
 
 public class SelectVideo extends AppCompatActivity {

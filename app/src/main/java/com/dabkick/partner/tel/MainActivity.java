@@ -51,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
      * (http://www.buzzingandroid.com/tools/android-layout-finder)
      */
     private void findViews() {
-        container = (RelativeLayout)findViewById( R.id.container );
         userDetails = (RelativeLayout)findViewById( R.id.user_details );
         emailFields = (RelativeLayout)findViewById( R.id.email_fields );
         email = (TextView)findViewById( R.id.email );
