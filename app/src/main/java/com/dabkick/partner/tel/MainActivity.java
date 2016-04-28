@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dabkick.sdk.Dabkick;
+import com.dabkick.sdk.Global.PreferenceHandler;
 import com.dabkick.sdk.Global.UserIdentifier;
 import com.jakewharton.rxbinding.view.RxView;
 
@@ -81,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         RxView.clicks(resetBtn).throttleFirst(300,TimeUnit.MILLISECONDS).subscribe(new Action1<Void>() {
             @Override
             public void call(Void aVoid) {
-                Dabkick.reset();
+                PreferenceHandler.clearAll(MainActivity.this);
                 registeredInfo.setVisibility(View.GONE);
                 userDetails.setVisibility(View.VISIBLE);
                 resetBtn.setVisibility(View.GONE);

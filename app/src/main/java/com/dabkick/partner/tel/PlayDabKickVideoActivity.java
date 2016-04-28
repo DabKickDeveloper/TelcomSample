@@ -25,10 +25,12 @@ import com.dabkick.sdk.Dabkick;
 import com.dabkick.sdk.Global.BaseActivity;
 import com.dabkick.sdk.Global.GlobalHandler;
 import com.dabkick.sdk.Global.VideoManager;
-import com.dabkick.sdk.Livesession.YouTubeVideoDetail;
+import com.dabkick.sdk.Livesession.LSManager.VideoMessage;
+import com.dabkick.sdk.Livesession.LSManager.YoutubeMessage;
 import com.dabkick.sdk.Video.Utilities;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by developer3 on 4/7/16.
@@ -37,7 +39,7 @@ public class PlayDabKickVideoActivity extends Activity {
 
     final public static String EXTRA_VIDEO_ID = "videoID";
 
-    YouTubeVideoDetail mYouTubeVideoDetail;
+    YoutubeMessage mYouTubeMsg;
 
     public int stopPosition;
     long totalDuration;
@@ -102,7 +104,7 @@ public class PlayDabKickVideoActivity extends Activity {
 
         VideoManager.getInstance().addOnFinishedSingleVideoListener(videoID, new VideoManager.OnFinishedSingleVideoListener() {
             @Override
-            public void OnFinishedSingleVideoListener(boolean success,final YouTubeVideoDetail detail) {
+            public void OnFinishedSingleVideoListener(boolean success,final YoutubeMessage detail) {
                 if (success) {
 
                     GlobalHandler.runOnUIThread(new Runnable() {
@@ -112,9 +114,9 @@ public class PlayDabKickVideoActivity extends Activity {
                         }
                     });
 
-                    mYouTubeVideoDetail = detail;
+                    mYouTubeMsg = detail;
 
-                    detail.setOnFinishedLoadStreamURLListener(new YouTubeVideoDetail.OnFinishedLoadStreamURLListener() {
+                    detail.setOnFinishedLoadStreamURLListener(new YoutubeMessage.OnFinishedLoadStreamURLListener() {
                         @Override
                         public void OnFinishedLoadStreamURL(String fullStreamURL) {
                             if (fullStreamURL != null) {
@@ -130,7 +132,8 @@ public class PlayDabKickVideoActivity extends Activity {
                                 finish();
                         }
                     });
-                    detail.LoadStreamURL();
+                    detail.loadStreamURL();
+
                 } else {
                     finish();
                 }
@@ -225,7 +228,7 @@ public class PlayDabKickVideoActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                if (mYouTubeVideoDetail == null)
+                if (mYouTubeMsg == null)
                     return;
 
                 if (videoView.isPlaying()) {
@@ -239,13 +242,14 @@ public class PlayDabKickVideoActivity extends Activity {
                     scrubber_relative.setVisibility(View.GONE);
                 }
 
-                //ashwini added
-                VideoManager.getInstance().clearSelectedItem();
-                VideoManager.getInstance().addToSelectedList(mYouTubeVideoDetail);
-                //ashwini ended
+                List<VideoMessage> list = new ArrayList<VideoMessage>();
+                list.add(mYouTubeMsg);
 
-                //end
-                Dabkick.watchWithFriends(PlayDabKickVideoActivity.this,mYouTubeVideoDetail.videoID);
+
+                //             Dabkick.watchWithFriends(PlayDabKickVideoActivity.this,list,getFacebookFriends());
+                Dabkick.watchWithFriends(PlayDabKickVideoActivity.this,list,null);
+
+                finish();
             }
         });
 
