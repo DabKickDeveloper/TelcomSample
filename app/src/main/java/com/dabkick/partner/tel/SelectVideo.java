@@ -73,7 +73,7 @@ public class SelectVideo extends AppCompatActivity {
             }
         });
         //Condition check to load the searched videos if not throw alert(logic done in DabKickVideoManagerAgent)
-        videoManager.searchVideo("telcom");
+        videoManager.searchVideo("funnyordie");
 
         hListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
