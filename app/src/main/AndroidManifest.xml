@@ -23,6 +23,8 @@
         </activity>
         <activity android:name=".SelectVideo"
             android:screenOrientation="portrait"></activity>
+        <activity android:name=".PlayDabKickVideoActivity"
+            android:screenOrientation="landscape"></activity>
 
     </application>
 

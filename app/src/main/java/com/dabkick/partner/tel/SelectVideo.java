@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.dabkick.sdk.Dabkick;
 import com.dabkick.sdk.Global.GlobalHandler;
 import com.dabkick.sdk.Global.HorizontalListView;
 import com.dabkick.sdk.Global.PreferenceHandler;
@@ -63,7 +64,7 @@ public class SelectVideo extends AppCompatActivity {
                     public void run() {
                         mProgressBar.setVisibility(View.GONE);
                         //call this method with the search term to get the results
-                        VideosList = videoManager.getSearchResultByTerm("telcom");
+                        VideosList = videoManager.getSearchResultByTerm("funnyordie");
                         mVideoHorizontalAdapter = new VideoHorizontalAdapter(SelectVideo.this, R.layout.video_view_item, VideosList, false);
                         hListView.setAdapter(mVideoHorizontalAdapter);
                         mVideoHorizontalAdapter.notifyDataSetChanged();

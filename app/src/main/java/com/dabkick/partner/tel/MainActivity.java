@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.Window;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
@@ -75,6 +76,21 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Bundle b = getIntent().getExtras();
+        if(b!=null){
+            Log.e("SHWETHA", "received with notification");
+           /* requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+            setProgressBarIndeterminateVisibility(true);*/
+            String dabType = b.getString("dabType");
+            String sessionID = b.getString("sessionID");
+            String msg = b.getString("msg");
+            String pushType = b.getString("pushType");
+            String notifyID = b.getString("notifyID");
+            boolean withNotification = b.getBoolean("withNotification");
+            //setProgressBarIndeterminateVisibility(false);
+            Dabkick.receivedNotification(dabType,sessionID,msg,pushType,notifyID,withNotification);
+        }
 
         findViews();
 
