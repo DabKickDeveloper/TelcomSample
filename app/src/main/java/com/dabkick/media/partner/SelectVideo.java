@@ -1,4 +1,4 @@
-package com.dabkick.partner.tel;
+package com.dabkick.media.partner;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.dabkick.sdk.Dabkick;
 import com.dabkick.sdk.Global.GlobalHandler;
 import com.dabkick.sdk.Global.HorizontalListView;
 import com.dabkick.sdk.Global.PreferenceHandler;

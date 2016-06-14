@@ -1,4 +1,4 @@
-package com.dabkick.partner.tel;
+package com.dabkick.media.partner;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -22,7 +22,6 @@ import android.widget.TextView;
 import android.widget.VideoView;
 
 import com.dabkick.sdk.Dabkick;
-import com.dabkick.sdk.Global.BaseActivity;
 import com.dabkick.sdk.Global.GlobalHandler;
 import com.dabkick.sdk.Global.VideoManager;
 import com.dabkick.sdk.Livesession.LSManager.VideoMessage;

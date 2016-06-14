@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.dabkick.partner.tel">
+    package="com.dabkick.media.partner">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         >
-        <activity android:name=".MainActivity"
+        <activity android:name="com.dabkick.media.partner.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,9 +21,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SelectVideo"
+        <activity android:name="com.dabkick.media.partner.SelectVideo"
             android:screenOrientation="portrait"></activity>
-        <activity android:name=".PlayDabKickVideoActivity"
+        <activity android:name="com.dabkick.media.partner.PlayDabKickVideoActivity"
             android:screenOrientation="landscape"></activity>
 
     </application>

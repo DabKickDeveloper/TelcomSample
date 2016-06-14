@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.dabkick.partner.tel.MainActivity">
+    tools:context="com.dabkick.media.partner.MainActivity">
 
 
     <ScrollView
@@ -21,7 +21,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:text="Welcome to Media Partner App"
+                android:text="Welcome to MPA"
                 android:textSize="18dp"
                 android:textStyle="bold" />
 
@@ -50,7 +50,7 @@
                             android:layout_centerVertical="true"
                             android:text="Email" />
 
-                        <com.dabkick.partner.tel.CustomEdTxt
+                        <com.dabkick.media.partner.CustomEdTxt
                             android:id="@+id/email_id"
                             android:layout_width="200dp"
                             android:layout_height="wrap_content"
@@ -76,7 +76,7 @@
                             android:text="Phone" />
 
 
-                        <com.dabkick.partner.tel.CustomEdTxt
+                        <com.dabkick.media.partner.CustomEdTxt
                             android:id="@+id/ph_num"
                             android:layout_width="200dp"
                             android:layout_height="wrap_content"
@@ -102,7 +102,7 @@
                             android:text="Uniq ID" />
 
 
-                        <com.dabkick.partner.tel.CustomEdTxt
+                        <com.dabkick.media.partner.CustomEdTxt
                             android:id="@+id/un_id"
                             android:layout_width="200dp"
                             android:layout_height="wrap_content"

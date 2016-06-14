@@ -1,8 +1,7 @@
-package com.dabkick.partner.tel;
+package com.dabkick.media.partner;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.EditText;
 

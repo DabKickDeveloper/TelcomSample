@@ -1,4 +1,4 @@
-package com.dabkick.partner.tel;
+package com.dabkick.media.partner;
 
 /**
  * Created by developer3 on 4/7/16.

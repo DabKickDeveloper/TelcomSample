@@ -1,4 +1,4 @@
-package com.dabkick.partner.tel;
+package com.dabkick.media.partner;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
