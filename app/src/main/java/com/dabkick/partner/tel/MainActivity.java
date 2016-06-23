@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
             String notifyID = b.getString("notifyID");
             boolean withNotification = b.getBoolean("withNotification");
             //setProgressBarIndeterminateVisibility(false);
-            Dabkick.receivedNotification(dabType,sessionID,msg,pushType,notifyID,withNotification);
+            Dabkick.receivedNotification(this);
         }
 
         findViews();
