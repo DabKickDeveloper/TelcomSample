@@ -16,6 +16,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -51,6 +53,10 @@ public class PlayDabKickVideoActivity extends Activity {
     VideoView videoView;
     ProgressDialog progressDialog;
     TextView video_name, startpos, stoppos, landscapeEpisodeTitle;
+    RelativeLayout videoMiniWindow;
+    ListView videoMiniWindowListview;
+    RelativeLayout videoBtn;
+    ImageView videoCarrot;
 
     Button play_pause_button;
     RelativeLayout videocontrol_relative_layout, scrubber_relative, wathWIthFriend, playPauseBtnContainer, closeVideoPlayer;
@@ -83,17 +89,25 @@ public class PlayDabKickVideoActivity extends Activity {
         scrubber_relative = (RelativeLayout) findViewById(com.dabkick.sdk.R.id.scrubber_relative);
         videocontrol_relative_layout = (RelativeLayout) findViewById(com.dabkick.sdk.R.id.video_controls_relative);
         videoseek = (SeekBar) findViewById(com.dabkick.sdk.R.id.seekbar);
+
+        videoMiniWindow = (RelativeLayout) findViewById(R.id.videos_relative_layout);
+        videoMiniWindowListview = (ListView) findViewById(R.id.videos_list_on_player);
+        videoBtn = (RelativeLayout) findViewById(R.id.videos_btn);
+        videoCarrot = (ImageView) findViewById(R.id.videos_carrot);
     }
 
     @Override
     protected void onCreate(Bundle bundle) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(bundle);
-        setContentView(com.dabkick.sdk.R.layout.activity_play_dab_kick_video);
+        setContentView(com.dabkick.partner.tel.R.layout.activity_play_dab_kick_video);
         findViews();
         utilities = new Utilities();
 
-        DialogHelper.popupAlertDialog(this, null, "Video is still playing in the partner app's video player. When \'Watch with friends\' button is clicked, the user can watch the video together inside DabKick's interface.", "ok");
+
+        videoMiniWindowListview.setAdapter(MainActivity.adapter);
+
+        //DialogHelper.popupAlertDialog(this, null, "Video is still playing in the partner app's video player. When \'Watch with friends\' button is clicked, the user can watch the video together inside DabKick's interface.", "ok");
         videoseek.getProgressDrawable().setColorFilter(Color.LTGRAY, PorterDuff.Mode.SRC_IN);
 
         Intent intent = getIntent();
@@ -104,7 +118,7 @@ public class PlayDabKickVideoActivity extends Activity {
 
         VideoManager.getInstance().addOnFinishedSingleVideoListener(videoID, new VideoManager.OnFinishedSingleVideoListener() {
             @Override
-            public void OnFinishedSingleVideoListener(boolean success,final YoutubeMessage detail) {
+            public void OnFinishedSingleVideoListener(boolean success, final YoutubeMessage detail) {
                 if (success) {
 
                     GlobalHandler.runOnUIThread(new Runnable() {
@@ -259,6 +273,13 @@ public class PlayDabKickVideoActivity extends Activity {
                 });
 
                 //finish();
+            }
+        });
+
+        videoBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switchMinWindow();
             }
         });
 
@@ -441,4 +462,37 @@ public class PlayDabKickVideoActivity extends Activity {
         }
     }
 
+    void switchMinWindow()
+    {
+        if (videoMiniWindow.getVisibility() == View.VISIBLE)
+            hideMinWindow();
+        else
+            showMinWindow();
+    }
+
+    void showMinWindow()
+    {
+        GlobalHandler.runOnUIThread(new Runnable() {
+            @Override
+            public void run() {
+                videoMiniWindow.setVisibility(View.VISIBLE);
+                videoCarrot.setVisibility(View.VISIBLE);
+                videoBtn.setBackground(getResources().getDrawable(R.drawable.red_background_for_videos_button));
+            }
+        });
+
+    }
+
+    void hideMinWindow()
+    {
+        GlobalHandler.runOnUIThread(new Runnable() {
+            @Override
+            public void run() {
+                videoMiniWindow.setVisibility(View.GONE);
+                videoCarrot.setVisibility(View.GONE);
+                videoBtn.setBackground(getResources().getDrawable(R.drawable.black_transparent_for_videos_button));
+            }
+        });
+
+    }
 }
