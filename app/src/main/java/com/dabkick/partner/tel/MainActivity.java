@@ -51,37 +51,36 @@ public class MainActivity extends AppCompatActivity {
             list.add(new ArrayList());
         }
 
-        adapter = new VideoVerticalAdapter(this, list);
+        final String[] searchTerms = new String[]{"Game of Thrones","Fantastic Four","HBO Trailers","HBO Boxing"};
+        adapter = new VideoVerticalAdapter(this, list, searchTerms);
         listView.setAdapter(adapter);
 
         //make a call to this agent to get the search results and pass the results to your adapter to show it in list view
-        videoManager.setOnSearchFinishedLoading("Game of Thrones", new VideoManager.OnSearchFinishedLoadingListener() {
+        videoManager.setOnSearchFinishedLoading(searchTerms[0], new VideoManager.OnSearchFinishedLoadingListener() {
             @Override
             public void onSearchFinishedLoading(boolean b) {
                 GlobalHandler.runOnUIThread(new Runnable() {
                     @Override
                     public void run() {
                         //call this method with the search term to get the results
-                        VideosList = videoManager.getSearchResultByTerm("Game of Thrones");
+                        VideosList = videoManager.getSearchResultByTerm(searchTerms[0]);
                         list.get(0).addAll(VideosList);
                         adapter.notifyDataSetChanged();
-
-
                     }
                 });
             }
         });
         //Condition check to load the searched videos if not throw alert(logic done in DabKickVideoManagerAgent)
-        videoManager.searchVideo("Game of Thrones");
+        videoManager.searchVideo(searchTerms[0]);
 
-        videoManager.setOnSearchFinishedLoading("Fantastic Four", new VideoManager.OnSearchFinishedLoadingListener() {
+        videoManager.setOnSearchFinishedLoading(searchTerms[1], new VideoManager.OnSearchFinishedLoadingListener() {
             @Override
             public void onSearchFinishedLoading(boolean b) {
                 GlobalHandler.runOnUIThread(new Runnable() {
                     @Override
                     public void run() {
                         //call this method with the search term to get the results
-                        VideosList = videoManager.getSearchResultByTerm("Fantastic Four");
+                        VideosList = videoManager.getSearchResultByTerm(searchTerms[1]);
                         list.get(1).addAll(VideosList);
                         adapter.notifyDataSetChanged();
                     }
@@ -89,16 +88,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         //Condition check to load the searched videos if not throw alert(logic done in DabKickVideoManagerAgent)
-        videoManager.searchVideo("Fantastic Four");
+        videoManager.searchVideo(searchTerms[1]);
 
-        videoManager.setOnSearchFinishedLoading("HBO Trailers", new VideoManager.OnSearchFinishedLoadingListener() {
+        videoManager.setOnSearchFinishedLoading(searchTerms[2], new VideoManager.OnSearchFinishedLoadingListener() {
             @Override
             public void onSearchFinishedLoading(boolean b) {
                 GlobalHandler.runOnUIThread(new Runnable() {
                     @Override
                     public void run() {
                         //call this method with the search term to get the results
-                        VideosList = videoManager.getSearchResultByTerm("HBO Trailers");
+                        VideosList = videoManager.getSearchResultByTerm(searchTerms[2]);
                         list.get(2).addAll(VideosList);
                         adapter.notifyDataSetChanged();
                     }
@@ -106,16 +105,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         //Condition check to load the searched videos if not throw alert(logic done in DabKickVideoManagerAgent)
-        videoManager.searchVideo("HBO Trailers");
+        videoManager.searchVideo(searchTerms[2]);
 
-        videoManager.setOnSearchFinishedLoading("HBO Boxing",new VideoManager.OnSearchFinishedLoadingListener() {
+        videoManager.setOnSearchFinishedLoading(searchTerms[3],new VideoManager.OnSearchFinishedLoadingListener() {
             @Override
             public void onSearchFinishedLoading(boolean b) {
                 GlobalHandler.runOnUIThread(new Runnable() {
                     @Override
                     public void run() {
                         //call this method with the search term to get the results
-                        VideosList = videoManager.getSearchResultByTerm("HBO Boxing");
+                        VideosList = videoManager.getSearchResultByTerm(searchTerms[3]);
                         list.get(3).addAll(VideosList);
                         adapter.notifyDataSetChanged();
                     }
@@ -123,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         //Condition check to load the searched videos if not throw alert(logic done in DabKickVideoManagerAgent)
-        videoManager.searchVideo("HBO Boxing");
+        videoManager.searchVideo(searchTerms[3]);
 
     }
 

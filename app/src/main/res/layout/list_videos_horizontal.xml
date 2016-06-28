@@ -5,9 +5,20 @@
     android:layout_marginTop="10dp"
     android:background="@color/white">
 
+    <TextView
+        android:id="@+id/title"
+        android:text="title"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:textSize="18dp"
+        android:layout_marginLeft="7dp"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="30dp" />
+
    <com.dabkick.sdk.Global.HorizontalListView
+       android:layout_below="@+id/title"
         android:id="@+id/videoHorizontalListview"
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="105dp"
         android:layout_marginBottom="10dp"/>

@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.dabkick.sdk.Global.HorizontalListView;
 import com.dabkick.sdk.Livesession.LSManager.YouTubeVideoDetail;
@@ -24,10 +25,15 @@ public class VideoVerticalAdapter extends BaseAdapter {
 
     Activity activity;
     ArrayList<ArrayList> data;
+    String[] titles;
 
-    public VideoVerticalAdapter(Activity activity,ArrayList<ArrayList> list) {
+    public VideoVerticalAdapter(Activity activity,ArrayList<ArrayList> list, String[] titles) {
         this.activity = activity;
         this.data = list;
+        this.titles = titles;
+
+        titles[2] = "Trailers";
+        titles[3] = "Boxing";
     }
 
     @Override
@@ -64,6 +70,7 @@ public class VideoVerticalAdapter extends BaseAdapter {
             viewHolder.adapter = new VideoHorizontalAdapter(activity, R.layout.video_view_item, data.get(i), false);
 
         viewHolder.listView.setAdapter(viewHolder.adapter);
+        viewHolder.title.setText(titles[i]);
 
         final int rowIndex = i;
         viewHolder.listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -83,14 +90,17 @@ public class VideoVerticalAdapter extends BaseAdapter {
     public static class ViewHolder {
         VideoHorizontalAdapter adapter;
         HorizontalListView listView;
+        TextView title;
 
-        public ViewHolder(HorizontalListView listView) {
+        public ViewHolder(HorizontalListView listView, TextView title) {
             this.listView = listView;
+            this.title = title;
         }
 
         public static ViewHolder create(View rootLayout) {
             HorizontalListView listView = (HorizontalListView)rootLayout.findViewById(R.id.videoHorizontalListview);
-            return new ViewHolder(listView);
+            TextView title = (TextView)rootLayout.findViewById(R.id.title);
+            return new ViewHolder(listView,title);
         }
     }
 
