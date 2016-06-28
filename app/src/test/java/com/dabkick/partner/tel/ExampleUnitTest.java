@@ -1,4 +1,4 @@
-package com.dabkick.partner.tel;
+package com.dabkick.media.partner;
 
 import org.junit.Test;
 

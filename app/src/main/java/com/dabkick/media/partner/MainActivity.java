@@ -1,218 +1,131 @@
 package com.dabkick.media.partner;
 
 import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.KeyEvent;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
+import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.dabkick.sdk.Dabkick;
+import com.dabkick.sdk.Global.GlobalHandler;
+import com.dabkick.sdk.Global.HorizontalListView;
 import com.dabkick.sdk.Global.PreferenceHandler;
-import com.dabkick.sdk.Global.UserIdentifier;
-import com.jakewharton.rxbinding.view.RxView;
-
-import java.util.concurrent.TimeUnit;
-
-import rx.functions.Action1;
+import com.dabkick.sdk.Global.VideoManager;
+import com.dabkick.sdk.Livesession.LSManager.YouTubeVideoDetail;
+import com.dabkick.sdk.Livesession.VideoHorizontalAdapter;
+import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    private RelativeLayout container;
-    private RelativeLayout userDetails;
-    private RelativeLayout emailFields;
-    private TextView email;
-    private CustomEdTxt emailId;
-    private RelativeLayout phoneFields;
-    private TextView phone;
-    private CustomEdTxt phNum;
-    private RelativeLayout uniqueFields;
-    private TextView id;
-    private CustomEdTxt unId;
-    private LinearLayout registeredInfo;
-    private TextView emailText;
-    private TextView phoneText;
-    private TextView uniqueIDText;
-    private Button resetBtn;
-    private Button cntBtn;
+    //your own listview
+    public ListView listView;
 
-    /**
-     * Find the Views in the layout<br />
-     * <br />
-     * Auto-created on 2016-04-08 23:40:36 by Android Layout Finder
-     * (http://www.buzzingandroid.com/tools/android-layout-finder)
-     */
-    private void findViews() {
-        userDetails = (RelativeLayout)findViewById( R.id.user_details );
-        emailFields = (RelativeLayout)findViewById( R.id.email_fields );
-        email = (TextView)findViewById( R.id.email );
-        emailId = (CustomEdTxt) findViewById( R.id.email_id );
-        phoneFields = (RelativeLayout)findViewById( R.id.phone_fields );
-        phone = (TextView)findViewById( R.id.phone );
-        phNum = (CustomEdTxt)findViewById( R.id.ph_num );
-        uniqueFields = (RelativeLayout)findViewById( R.id.unique_fields );
-        id = (TextView)findViewById( R.id.id );
-        unId = (CustomEdTxt)findViewById( R.id.un_id );
-        registeredInfo = (LinearLayout)findViewById( R.id.registeredInfo );
-        emailText = (TextView)findViewById( R.id.emailText );
-        phoneText = (TextView)findViewById( R.id.phoneText );
-        uniqueIDText = (TextView)findViewById( R.id.uniqueIDText );
-        resetBtn = (Button)findViewById( R.id.reset_btn );
-        cntBtn = (Button)findViewById( R.id.cnt_btn );
-    }
-
+    //Dabkick agent init to make use of lib
+    VideoManager videoManager = VideoManager.getInstance();
+    //local array list to get the results
+    ArrayList VideosList;
+    public static VideoVerticalAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_activity);
 
-        Bundle b = getIntent().getExtras();
-        if(b!=null){
-            Log.e("SHWETHA", "received with notification");
-           /* requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-            setProgressBarIndeterminateVisibility(true);*/
-            String dabType = b.getString("dabType");
-            String sessionID = b.getString("sessionID");
-            String msg = b.getString("msg");
-            String pushType = b.getString("pushType");
-            String notifyID = b.getString("notifyID");
-            boolean withNotification = b.getBoolean("withNotification");
-            //setProgressBarIndeterminateVisibility(false);
-            Dabkick.receivedNotification(dabType,sessionID,msg,pushType,notifyID,withNotification);
-        }
+        Dabkick.receivedNotification(this);
 
-        findViews();
-
-        RxView.clicks(resetBtn).throttleFirst(300,TimeUnit.MILLISECONDS).subscribe(new Action1<Void>() {
-            @Override
-            public void call(Void aVoid) {
-                PreferenceHandler.clearAll(MainActivity.this);
-                registeredInfo.setVisibility(View.GONE);
-                userDetails.setVisibility(View.VISIBLE);
-                resetBtn.setVisibility(View.GONE);
-            }
-        });
-
-        emailId.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                boolean handled = false;
-                if (actionId == EditorInfo.IME_ACTION_NEXT) {
-                    requestFocus(phNum);
-                    Log.d("vallabh","inside email id");
-                    return true;
-                }
-                return handled;
-            }
-        });
-
-        phNum.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                boolean handled = false;
-                if (actionId == EditorInfo.IME_ACTION_NEXT) {
-                    requestFocus(unId);
-                    Log.d("vallabh","inside phno");
-                    return true;
-                }
-                return handled;
-            }
-        });
-
-        RxView.clicks(cntBtn).throttleFirst(300, TimeUnit.MILLISECONDS).subscribe(new Action1<Void>() {
-            @Override
-            public void call(Void aVoid) {
-
-                if (Dabkick.isRegistered(MainActivity.this))
-                {
-                    Intent selectVideo = new Intent(MainActivity.this, SelectVideo.class);
-                    selectVideo.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(selectVideo);
-                    //finish();
-                    return;
-                }
-
-                if (!emailId.getText().toString().isEmpty() ||
-                        !phNum.getText().toString().isEmpty() || !unId.getText().toString().isEmpty()) {
-
-                    String e = emailId.getText().toString();
-                    String p = phNum.getText().toString();
-                    String partnerID = unId.getText().toString();
-
-                    UserIdentifier identifier = new UserIdentifier();
-                    identifier.email = e;
-                    identifier.phoneNumber = p;
-                    identifier.uniqueID = partnerID;
-
-                    Dabkick.setOnRegisterFinished(new Dabkick.OnRegisterFinishedListener() {
-                        @Override
-                        public void onRegistered(boolean b, String s) {
-
-                            Runnable ok = new Runnable() {
-                                @Override
-                                public void run() {
-                                    Intent selectVideo = new Intent(MainActivity.this, SelectVideo.class);
-                                    selectVideo.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                    startActivity(selectVideo);
-                                    //finish();
-                                }
-                            };
-                            DialogHelper.popupAlertDialog(MainActivity.this, null, "The app is now registered with DabKick with the provided user credentials.", "ok", ok);
-                        }
-                    });
-                    String packageName = MainActivity.this.getPackageName();
-                    Dabkick.register(MainActivity.this,packageName, identifier);
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setCustomView(R.layout.abs_layout);
 
 
-                } else {
+        listView = (ListView)this.findViewById(R.id.verticalListview);
 
-                    Toast.makeText(MainActivity.this, "All fields Empty. Enter at least one field", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-
-    }
-
-    void requestFocus(final EditText editText) {
-        editText.post(new Runnable() {
-            @Override
-            public void run() {
-                editText.requestFocus();
-                editText.setSelection(editText.getText().length());
-            }
-        });
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        if (Dabkick.isRegistered(this))
+        final ArrayList<ArrayList> list = new ArrayList();
+        for (int i=0; i<4; i++)
         {
-            registeredInfo.setVisibility(View.VISIBLE);
-            userDetails.setVisibility(View.GONE);
-            resetBtn.setVisibility(View.VISIBLE);
-
-            UserIdentifier userIdentifier = UserIdentifier.getStoredValue(this);
-            emailText.setText(userIdentifier.email);
-            phoneText.setText(userIdentifier.phoneNumber);
-            uniqueIDText.setText(userIdentifier.uniqueID);
-
+            list.add(new ArrayList());
         }
-        else {
-            registeredInfo.setVisibility(View.GONE);
-            userDetails.setVisibility(View.VISIBLE);
-            resetBtn.setVisibility(View.GONE);
-        }
+
+        adapter = new VideoVerticalAdapter(this, list);
+        listView.setAdapter(adapter);
+
+        //make a call to this agent to get the search results and pass the results to your adapter to show it in list view
+        videoManager.setOnSearchFinishedLoading("Game of Thrones", new VideoManager.OnSearchFinishedLoadingListener() {
+            @Override
+            public void onSearchFinishedLoading(boolean b) {
+                GlobalHandler.runOnUIThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //call this method with the search term to get the results
+                        VideosList = videoManager.getSearchResultByTerm("Game of Thrones");
+                        list.get(0).addAll(VideosList);
+                        adapter.notifyDataSetChanged();
+
+
+                    }
+                });
+            }
+        });
+        //Condition check to load the searched videos if not throw alert(logic done in DabKickVideoManagerAgent)
+        videoManager.searchVideo("Game of Thrones");
+
+        videoManager.setOnSearchFinishedLoading("Fantastic Four", new VideoManager.OnSearchFinishedLoadingListener() {
+            @Override
+            public void onSearchFinishedLoading(boolean b) {
+                GlobalHandler.runOnUIThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //call this method with the search term to get the results
+                        VideosList = videoManager.getSearchResultByTerm("Fantastic Four");
+                        list.get(1).addAll(VideosList);
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+            }
+        });
+        //Condition check to load the searched videos if not throw alert(logic done in DabKickVideoManagerAgent)
+        videoManager.searchVideo("Fantastic Four");
+
+        videoManager.setOnSearchFinishedLoading("HBO Trailers", new VideoManager.OnSearchFinishedLoadingListener() {
+            @Override
+            public void onSearchFinishedLoading(boolean b) {
+                GlobalHandler.runOnUIThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //call this method with the search term to get the results
+                        VideosList = videoManager.getSearchResultByTerm("HBO Trailers");
+                        list.get(2).addAll(VideosList);
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+            }
+        });
+        //Condition check to load the searched videos if not throw alert(logic done in DabKickVideoManagerAgent)
+        videoManager.searchVideo("HBO Trailers");
+
+        videoManager.setOnSearchFinishedLoading("HBO Boxing",new VideoManager.OnSearchFinishedLoadingListener() {
+            @Override
+            public void onSearchFinishedLoading(boolean b) {
+                GlobalHandler.runOnUIThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //call this method with the search term to get the results
+                        VideosList = videoManager.getSearchResultByTerm("HBO Boxing");
+                        list.get(3).addAll(VideosList);
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+            }
+        });
+        //Condition check to load the searched videos if not throw alert(logic done in DabKickVideoManagerAgent)
+        videoManager.searchVideo("HBO Boxing");
+
     }
+
 }
