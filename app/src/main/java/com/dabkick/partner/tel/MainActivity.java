@@ -5,6 +5,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -31,6 +32,21 @@ public class MainActivity extends AppCompatActivity {
     //local array list to get the results
     ArrayList VideosList;
     public static VideoVerticalAdapter adapter;
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        Log.d("yuan", "on new intent");
+
+        Bundle b = intent.getExtras();
+        if(b!=null) {
+            Log.e("yuan", "received with notification");
+           /* requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+            setProgressBarIndeterminateVisibility(true);*/
+            String sessionID = b.getString("sessionID");
+            Log.e("yuan", "sessionID:"+sessionID);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
