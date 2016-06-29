@@ -261,14 +261,20 @@ public class PlayDabKickVideoActivity extends Activity {
 
 
                 //             Dabkick.watchWithFriends(PlayDabKickVideoActivity.this,list,getFacebookFriends());
-                Dabkick.watchWithFriends(PlayDabKickVideoActivity.this, list, null, new Dabkick.AlertMagnatic() {
+                Dabkick.watchWithFriends(PlayDabKickVideoActivity.this, list, null, new Dabkick.OnWatchWithFriend() {
                     @Override
                     public void onButtonClicked(boolean b) {
 
-                        if (b) {
+                    }
 
-                            PlayDabKickVideoActivity.this.finish();
-                        }
+                    @Override
+                    public void onBackPressed() {
+
+                    }
+
+                    @Override
+                    public void onSessionEnded() {
+                        PlayDabKickVideoActivity.this.finish();
                     }
                 });
 
