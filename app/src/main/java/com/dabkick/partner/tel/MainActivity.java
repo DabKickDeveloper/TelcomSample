@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
             list.add(new ArrayList());
         }
 
-        final String[] searchTerms = new String[]{"Game of Thrones","Fantastic Four","HBO Trailers","HBO Boxing"};
+        final String[] searchTerms = new String[]{"Game of Thrones episode","Fantastic Four","HBO Trailers","HBO Boxing"};
         adapter = new VideoVerticalAdapter(this, list, searchTerms);
         listView.setAdapter(adapter);
 

@@ -52,7 +52,7 @@
             android:layout_alignParentRight="true"
             android:background="@drawable/black_transparent_for_videos_button"
             android:layout_marginRight="18dp"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <ImageView
                 android:layout_width="50dp"

@@ -17,6 +17,7 @@ import com.dabkick.sdk.Livesession.LSManager.YouTubeVideoDetail;
 import com.dabkick.sdk.Livesession.VideoHorizontalAdapter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Created by developer3 on 6/27/16.
@@ -32,8 +33,10 @@ public class VideoVerticalAdapter extends BaseAdapter {
         this.data = list;
         this.titles = titles;
 
-        titles[2] = "Trailers";
-        titles[3] = "Boxing";
+        this.titles = Arrays.copyOf(titles, titles.length);
+        this.titles[0] = "Game of Thrones";
+        this.titles[2] = "Trailers";
+        this.titles[3] = "Boxing";
     }
 
     @Override
