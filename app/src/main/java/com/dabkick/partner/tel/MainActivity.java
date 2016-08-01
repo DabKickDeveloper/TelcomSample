@@ -58,8 +58,19 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.abs_layout);
 
+        Button openPhotos = (Button)findViewById(R.id.photos_btn);
 
-        listView = (ListView)this.findViewById(R.id.verticalListview);
+        openPhotos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Dabkick.openPhotos(MainActivity.this);
+
+            }
+        });
+
+
+        /*listView = (ListView)this.findViewById(R.id.verticalListview);
 
         final ArrayList<ArrayList> list = new ArrayList();
         for (int i=0; i<4; i++)
@@ -139,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
         });
         //Condition check to load the searched videos if not throw alert(logic done in DabKickVideoManagerAgent)
         videoManager.searchVideo(searchTerms[3]);
-
+*/
     }
 
 }
